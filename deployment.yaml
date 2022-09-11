@@ -1,0 +1,20 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ms-hello
+spec:
+  selector:
+    matchLabels:
+      app: ms-hello
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nginx-helloworld
+    spec:
+      containers:
+      - name: ms-hello
+        image: testmicroservicios.azurecr.io/ms-hello:latest
+        ports:
+        - containerPort: 80
