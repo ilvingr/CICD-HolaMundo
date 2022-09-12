@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ms-hello
-        image: testmicroservicios.azurecr.io/ms-hello:v1
+        image: testmicroservicios.azurecr.io/ms-hello:latest
         ports:
         - containerPort: 80
         
