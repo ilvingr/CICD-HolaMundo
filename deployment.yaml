@@ -1,8 +1,9 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ms-hello
+  namespace: test
 spec:
   selector:
     matchLabels:
@@ -11,10 +12,30 @@ spec:
   template:
     metadata:
       labels:
-        app: nginx-helloworld
+        app: ms-hello
     spec:
       containers:
       - name: ms-hello
-        image: testmicroservicios.azurecr.io/ms-hello:latest
+        image: testmicroservicios.azurecr.io/ms-hello:v1
         ports:
         - containerPort: 80
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-hello
+  namespace: test
+spec:
+  selector:
+    app: ms-hello
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+      - ip: 10.17.64.4
